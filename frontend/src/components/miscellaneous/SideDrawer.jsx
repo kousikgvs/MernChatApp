@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Box, Button, Input, Menu, MenuButton, MenuItem, MenuList, Text, Tooltip , useDisclosure } from '@chakra-ui/react'
+import { Avatar, Box, Button, Input, Menu, MenuButton, MenuItem, MenuList, Spinner, Text, Tooltip , useDisclosure } from '@chakra-ui/react'
 import { ChatState } from '../../context/ChatProvider'
 import axios from 'axios'
 import ProfileModal from './profileModel'
@@ -18,7 +18,7 @@ import {
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Axios from 'axios'
 const SideDrawer = () => {
   const [search, setSearch] = useState("")
   const [searchResult, setSearchResult] = useState([])
@@ -70,12 +70,40 @@ const SideDrawer = () => {
 
   }
 
-  const accessChat = () => {
-     
+const accessChat = async (userId) => {
+  try {
+    setLoadingchat(true);
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.token}`
+      }
+    };
+
+    const { data } = await Axios.post('/api/chat', { userId }, config);
+  //  if chats already present append it to our chat
+    if (!chats.find((c) => c._id === data._id))
+    {
+      setChats([data , ...chats])
+    }  
+    setSelectedChat(data);
+    setLoadingchat(false); 
+
+    onClose(); 
+  } catch (error) {
+    console.error("Error accessing chat:", error);
+    toast(`Error Fetching the Chats to Load`, {
+      type: 'warning', 
+      position: 'top-right',  
+      autoClose: 5000, 
+      closeButton: true,
+      className: 'my-toast'
+      });
   }
+};
 
-
-  const { user } = ChatState();
+  const { user , setSelectedChat , chats , setChats } = ChatState();
   return (
     <div>
       <Box
@@ -165,10 +193,10 @@ const SideDrawer = () => {
                 )
             ) 
             }
+            {loadingchat && <Spinner ml="auto" display={"flex"}/>}
           </DrawerBody>
 
           <DrawerFooter>
-            
           </DrawerFooter>
         </DrawerContent>
         <ToastContainer />
