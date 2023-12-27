@@ -1,50 +1,61 @@
-import React from "react";
-import { Container, Box, Text , Tab , Tabs , TabPanels , TabPanel , TabList} from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+} from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
 import Login from "../components/Authentication/Login";
 import Signup from "../components/Authentication/Signup";
-const HomePage = () => {
+
+function Homepage() {
+  const history = useHistory();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (user) history.push("/chats");
+  }, [history]);
+
   return (
     <Container maxW="xl" centerContent>
       <Box
-        display={"flex"}
-        flexDirection="row"
-        justifyContent={"center"}
-        m="40px 0 15px 0"
+        d="flex"
+        justifyContent="center"
         p={3}
+        bg="white"
         w="100%"
-        background={"white"}
-        borderRadius={"lg"}
-        borderWidth={"1px"}
+        m="40px 0 15px 0"
+        borderRadius="lg"
+        borderWidth="1px"
       >
-        <Text fontSize={"3xl"} fontFamily={"Work Sans"} color={"black"}>
+        <Text fontSize="4xl" fontFamily="Work sans">
           Talk-A-Tive
         </Text>
       </Box>
-      <Box
-      background={"white"}
-      padding={4}
-      width={"100%"}
-      borderRadius={"lg"}
-      borderWidth={"1px"}
-      color={"black"}
-      >
-      <Tabs variant='soft-rounded' >
-  <TabList mb={"1em"} display={"flex"}>
-    <Tab width={"50%"}>Login</Tab>
-    <Tab width={"50%"}>Signup</Tab>
-  </TabList>
-  <TabPanels>
-    <TabPanel>
-      <Login />
-    </TabPanel>
-    <TabPanel>
-      <Signup />
-    </TabPanel>
-  </TabPanels>
-</Tabs>
+      <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
+        <Tabs isFitted variant="soft-rounded">
+          <TabList mb="1em">
+            <Tab>Login</Tab>
+            <Tab>Sign Up</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Login />
+            </TabPanel>
+            <TabPanel>
+              <Signup />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
     </Container>
   );
-};
+}
 
-export default HomePage;
+export default Homepage;
