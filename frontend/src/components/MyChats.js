@@ -9,7 +9,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from './ChatLoading';
 import GroupChatModel from './miscellaneous/GroupChatModel';
 
-const MyChats = () => {
+const MyChats = ({fetchAgain}) => {
   const [loggedUser, setLoggedUser] = useState(null);
   const { user , setuser , selectedChat , setSelectedChat , chats , setChats } = ChatState();
 
@@ -43,7 +43,7 @@ const MyChats = () => {
       setLoggedUser(userInfo);
     }
     fetchChats();
-  }, []); 
+  }, [fetchAgain]); 
 
   return (
     <Box
@@ -60,7 +60,7 @@ const MyChats = () => {
       <Box
         pb="3"
         px="3"
-        fontSize={{ base: "28px", md: "30px" }}
+        fontSize={{ base: "28px", md: "20px" }}
         fontFamily="Work sans"
         display="flex"
         w="100%"

@@ -26,7 +26,6 @@ const GroupChatModel = ({ children }) => {
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const { user, chats, setChats } = ChatState();
 
   const handleSearch = async (query) => {
