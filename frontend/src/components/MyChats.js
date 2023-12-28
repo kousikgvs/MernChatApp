@@ -7,10 +7,11 @@ import { getSender } from '../config/ChatLogics';
 import { Box, Button, Stack, Text } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from './ChatLoading';
+import GroupChatModel from './miscellaneous/GroupChatModel';
 
 const MyChats = () => {
   const [loggedUser, setLoggedUser] = useState(null);
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const { user , setuser , selectedChat , setSelectedChat , chats , setChats } = ChatState();
 
   const fetchChats = async () => {
     try {
@@ -42,7 +43,7 @@ const MyChats = () => {
       setLoggedUser(userInfo);
     }
     fetchChats();
-  }, []); // Empty dependency array ensures this effect runs once on mount
+  }, []); 
 
   return (
     <Box
@@ -67,16 +68,17 @@ const MyChats = () => {
         alignItems="center"
       >
         MY Chats
+        <GroupChatModel>
         <Button
           display="flex"
           fontSize={{ base: "17px", md: "10px", lg: "17px" }}
           rightIcon={<AddIcon />}
         >
           New Group Chat
-        </Button>
+          </Button>
+        </GroupChatModel>
       </Box>
 
-      {/* Chats List */}
       <Box
         display="flex"
         flexDir="column"
@@ -99,7 +101,7 @@ const MyChats = () => {
                 px={3}
                 py={3}
                 borderRadius="lg"
-                mb={2} // Added margin bottom
+                mb={2}
               >
                 <Text>
                   {!chat.isGroupChat ? getSender(loggedUser, chat.users) : chat.chatName}

@@ -3,16 +3,16 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
-    const [user, setuser] = useState();
-    const [selectedChat, setSelectedChat] = useState();
+    const [user, setuser] = useState(null)
+    const [selectedChat, setSelectedChat] = useState(null)
     const history = useHistory();
     const [chats , setChats] = useState([])
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
         setuser(userInfo)
- 
+
         if (!userInfo) {
-            // history.push("/")
+            history.push("/")
         }
     },[history])
  
