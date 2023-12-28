@@ -1,26 +1,33 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    name: { type: "String", required: true },
+    email: { type: "String", unique: true, required: true },
+    password: { type: "String", required: true },
     pic: {
-      type: String,
-      default: "https://www.dgvaishnavcollege.edu.in/dgvaishnav-c/uploads/2021/01/dummy-profile-pic.jpg"
+      type: "String",
+      required: true,
+      default:
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
-  { timestamps: true }
+  { timestaps: true }
 );
- 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword , this.password)
-}
 
-userSchema.pre('save', async function(next) {
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+userSchema.pre("save", async function (next) {
   if (!this.isModified) {
-    return next();
+    next();
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -28,4 +35,5 @@ userSchema.pre('save', async function(next) {
 });
 
 const User = mongoose.model("User", userSchema);
+
 module.exports = User;

@@ -6,24 +6,24 @@ import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import { ChatState } from "../../context/ChatProvider";
+import { ChatState } from "../../Context/ChatProvider";
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
   const history = useHistory();
-  const { setuser } = ChatState();
+  const { setUser } = ChatState();
 
   const submitHandler = async () => {
     setLoading(true);
     if (!email || !password) {
       toast({
-        title: "Please fill in all the fields",
+        title: "Please Fill all the Feilds",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -53,14 +53,14 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      setuser(data);
+      setUser(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      history.push("/chats"); 
+      history.push("/chats");
     } catch (error) {
       toast({
-        title: "Error Occurred!",
-        description: error.response.data.message || "Something went wrong",
+        title: "Error Occured!",
+        description: error.response.data.message,
         status: "error",
         duration: 5000,
         isClosable: true,

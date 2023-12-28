@@ -18,9 +18,10 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { ChatState } from "../../context/ChatProvider";
-import UserBadgeItem from "../UserAvatar/UserBadgeItem";
-import UserListItem from "../UserAvatar/UserListItem";
+import { ChatState } from "../../Context/ChatProvider";
+import UserBadgeItem from "../userAvatar/UserBadgeItem";
+import UserListItem from "../userAvatar/UserListItem";
+
 const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();

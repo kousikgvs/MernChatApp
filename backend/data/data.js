@@ -2,8 +2,8 @@ const chats = [
   {
     isGroupChat: false,
     users: [
-      { 
-        name: "John Doe", 
+      {
+        name: "John Doe",
         email: "john@example.com",
       },
       {
@@ -106,5 +106,3 @@ const chats = [
     },
   },
 ];
-
-module.exports = chats;
